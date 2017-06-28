@@ -2,7 +2,7 @@
 clear;
 clc;
 %Time interval
-time = 0:.001:9.99;
+time = 0:.01:9.99;
 %Begin timing
 tic;
 
@@ -23,10 +23,8 @@ interceptorIC = [-45 / sqrt(2),45 / sqrt(2),50,0];
 [tInterceptor,YInterceptor] = ode45(@(t,Y) trajectory(t,Y,interceptorParams), time, interceptorIC);
 [tThreat,YThreat] = ode45(@(t,Y) trajectory(t,Y,threatParams), time, threatIC);
 
-%Create an array for the interceptor and threat X positions and Y positions
-interceptorPath = [YInterceptor(:,3), YInterceptor(:,4)];
-threatPath = [YThreat(:,3), YThreat(:,4)];
-
+%Calculate intersections
+intersections(YInterceptor(:, 3), YInterceptor(:, 4), YThreat(:, 3), YThreat(:, 4))
 %Stop timing
 toc;
 
@@ -34,8 +32,6 @@ toc;
 plot(YInterceptor(:,3), YInterceptor(:,4));
 hold on;
 plot(YThreat(:,3), YThreat(:,4));
-
-InterX(interceptorPath, threatPath)
 
 %Set plot limits
 xlim([-30, 70]);
