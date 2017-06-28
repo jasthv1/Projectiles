@@ -24,7 +24,7 @@ interceptorIC = [-45 / sqrt(2),45 / sqrt(2),50,0];
 [tThreat,YThreat] = ode45(@(t,Y) trajectory(t,Y,threatParams), time, threatIC);
 
 %Calculate intersections
-intersections(YInterceptor(:, 3), YInterceptor(:, 4), YThreat(:, 3), YThreat(:, 4))
+[intersectionX, intersectionY] = intersections(YInterceptor(:, 3), YInterceptor(:, 4), YThreat(:, 3), YThreat(:, 4))
 %Stop timing
 toc;
 
@@ -32,7 +32,7 @@ toc;
 plot(YInterceptor(:,3), YInterceptor(:,4));
 hold on;
 plot(YThreat(:,3), YThreat(:,4));
-
+plot(intersectionX, intersectionY, '-o');
 %Set plot limits
 xlim([-30, 70]);
 ylim([.1, 100]);
