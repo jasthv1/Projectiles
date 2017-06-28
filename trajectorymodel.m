@@ -43,7 +43,7 @@ ratio = xDifToIntersection / xDif;
 timeIntersection = tThreat(iThreat) + ratio * timeStep
 
 iIntercept = 1;
-while YThreat(iIntercept,3) < intersectionX
+while YInterceptor(iIntercept,3) > intersectionX
     iIntercept = iIntercept + 1;
 end
 
@@ -51,10 +51,14 @@ end
 toc;
 
 %Plot everything
-plot(YInterceptor(1:iIntercept,3), YInterceptor(1:iIntercept,4));
+plot(YInterceptor(1:iIntercept,3), YInterceptor(1:iIntercept,4), 'b');
 hold on;
-plot(YThreat(1:iThreat,3), YThreat(1:iThreat,4));
-plot(intersectionX, intersectionY, '-o');
+plot(YInterceptor(iIntercept: length(YInterceptor),3), YInterceptor(iIntercept: length(YInterceptor),4), ':b');
+
+plot(YThreat(1:iThreat,3), YThreat(1:iThreat,4), 'r');
+plot(YThreat(iThreat:length(YThreat),3), YThreat(iThreat:length(YThreat),4), ':r');
+
+plot(intersectionX, intersectionY, '-*k');
 %Set plot limits
 xlim([-30, 70]);
 ylim([.1, 100]);
