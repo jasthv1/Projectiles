@@ -5,7 +5,7 @@ tic;
 %Future things to do:
 %1)Learn the ode45 thing
 %2)Important: Make sure this model is actually accurate
-%Test 
+%Test Aram
 
 %Constants
 %Note, a '2' represents the target
