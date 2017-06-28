@@ -9,25 +9,25 @@ tic;
 
 %Constants
 %Note, a '2' represents the target
-t = 0:.01:9.99; %seconds
-m = .0427; %kilograms
-m2 = 1.134; %''  
-Sarea = (2.25 / 12 * .3048 / 2)^2 * pi; %meters
-Sarea2 = (10 / 12 * .3048 / 2)^2 * pi; %''
-Cd = .47; %will later be determined by testing
-Cd2 = .47; %''
+time = 0:.01:9.99; %seconds
+mass = .0427; %kilograms
+mass2 = 1.134; %''  
+crossSectionalArea = (2.25 / 12 * .3048 / 2)^2 * pi; %meters
+crossSectionalArea2 = (10 / 12 * .3048 / 2)^2 * pi; %''
+coefficentOfDrag = .47; %will later be determined by testing
+coefficentOfDrag2 = .47; %''
 density = 1.225; %of the air in kg/m^3
-v = 180; %meters/second
-v2 = 15; %''
+velocity = 180; %meters/second
+velocity2 = 15; %''
 theta = 5 / 180 * pi; %degrees
 theta2 = 45 / 180 * pi; %''
 n = 1;
  
 %initial velocities
-vx0 = -cos(theta) * v;
-vy0 = sin(theta) * v;
-vx02 = cos(theta2) * v2;
-vy02 = sin(theta2) * v2;
+vx0 = -cos(theta) * velocity;
+vy0 = sin(theta) * velocity;
+vx02 = cos(theta2) * velocity2;
+vy02 = sin(theta2) * velocity2;
  
 %Empty Matrices (for now)
 vx = zeros(1000, 1);
@@ -62,7 +62,7 @@ dy(1) = .00001;
 %the target and interceptor and adds to the previous position and velocity
 %to determine current values at time = n
  
-while n < length(t)
+while n < length(time)
     
     %Stop calculating once interceptor hits the ground
     if n > 1 && dy(n-1) < 0    
@@ -70,18 +70,18 @@ while n < length(t)
     end
     
     %Interceptor air resistance
-    airResFX = Sarea * Cd * density / 2 * vx(n) * vx(n);
-    airResFY = Sarea * Cd * density / 2 * vy(n) * vy(n);
-    airResx(n) = airResFX / m;
-    airResy(n) = airResFY / m;
+    airResFX = crossSectionalArea * coefficentOfDrag * density / 2 * vx(n) * vx(n);
+    airResFY = crossSectionalArea * coefficentOfDrag * density / 2 * vy(n) * vy(n);
+    airResx(n) = airResFX / mass;
+    airResy(n) = airResFY / mass;
     accelx(n) = airResx(n);
     accely(n) = -airResy(n) - 9.81;
     
     %Target air resistance
-    airResFX2 = Sarea2 * Cd2 * density / 2 * vx2(n) * vx2(n);
-    airResFY2 = Sarea2 * Cd2 * density / 2 * vy2(n) * vy2(n);
-    airResx2(n) = airResFX2 / m2;
-    airResy2(n) = airResFY2 / m2;
+    airResFX2 = crossSectionalArea2 * coefficentOfDrag2 * density / 2 * vx2(n) * vx2(n);
+    airResFY2 = crossSectionalArea2 * coefficentOfDrag2 * density / 2 * vy2(n) * vy2(n);
+    airResx2(n) = airResFX2 / mass2;
+    airResy2(n) = airResFY2 / mass2;
     accelx2(n) = -airResx2(n);
     accely2(n) = -airResy2(n) - 9.81;
     
@@ -130,7 +130,7 @@ end
 %possiblepoint's row counter
 j = 1;
 %another counter for possiblepoint's rows
-m = 1;
+mass = 1;
 %counter for possiblepoint's columns, REPRESENTS TIME
 o = 1;
 %counter for the number of almost-intersection points
@@ -144,7 +144,7 @@ totaly = 0;
 totalt = 0;
  
 %find every single possible difference of dx and dx2 as well as dy and dy2
-while j < length(t)
+while j < length(time)
        
        possiblepointx(j, :) = dx(j) - dx2;
        possiblepointy(j, :) = dy(j) - dy2;
@@ -153,9 +153,9 @@ while j < length(t)
 end
  
 %If both of the differences are close to 0, then it's an intersection
-while m <= 1000 && o <= 1000
+while mass <= 1000 && o <= 1000
            
-    if abs(possiblepointx(m, o)) < .1 && abs(possiblepointy(m, o)) < .1
+    if abs(possiblepointx(mass, o)) < .1 && abs(possiblepointy(mass, o)) < .1
     
         %Factor out the non-existing data points
         if dy(o) ~= 0 && dy2(o) ~= 0
@@ -173,13 +173,13 @@ while m <= 1000 && o <= 1000
     end
     
     %Move to the next row
-    m = m + 1;
+    mass = mass + 1;
     
     %Move to the next column and go back to row 1 every 1000 points
-    if m == 1000
+    if mass == 1000
         
         o = o + 1;
-        m = 1;
+        mass = 1;
         
     end
 end
