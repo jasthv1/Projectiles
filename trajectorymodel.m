@@ -1,8 +1,10 @@
 %%
 clear;
 clc;
+
+timeStep = 0.01; 
 %Time interval
-time = 0:.01:9.99;
+time = 0:timeStep:(5 - timeStep);
 %Begin timing
 tic;
 
@@ -25,13 +27,33 @@ interceptorIC = [-45 / sqrt(2),45 / sqrt(2),50,0];
 
 %Calculate intersections
 [intersectionX, intersectionY] = intersections(YInterceptor(:, 3), YInterceptor(:, 4), YThreat(:, 3), YThreat(:, 4));
+
+%Iterator through the threat path
+%Arbitraly look at x values of threat
+%Finds the index of the first x greater than the intersection point
+iThreat = 1;
+while YThreat(iThreat,3) < intersectionX
+    iThreat = iThreat + 1;
+end
+xBefore = YThreat(iThreat - 1, 3);
+xAfter = YThreat(iThreat, 3);
+xDif = xAfter - xBefore;
+xDifToIntersection = intersectionX - xBefore;
+ratio = xDifToIntersection / xDif;
+timeIntersection = tThreat(iThreat) + ratio * timeStep
+
+iIntercept = 1;
+while YThreat(iIntercept,3) < intersectionX
+    iIntercept = iIntercept + 1;
+end
+
 %Stop timing
 toc;
 
 %Plot everything
-plot(YInterceptor(:,3), YInterceptor(:,4));
+plot(YInterceptor(1:iIntercept,3), YInterceptor(1:iIntercept,4));
 hold on;
-plot(YThreat(:,3), YThreat(:,4));
+plot(YThreat(1:iThreat,3), YThreat(1:iThreat,4));
 plot(intersectionX, intersectionY, '-o');
 %Set plot limits
 xlim([-30, 70]);

@@ -1,14 +1,27 @@
+%A set of differential equations that describes the forces
+%on the particle at any given point and velocity
+%t is the time paramater, unused because the force is time invariant
+%Y represents the variables to differentiate with respect to time
+%The parameters define the parameters of the object (mass, drag, area)
 function f = trajectory_new(t, Y, parameters)
 
+%parameters is a structure that contains the fields below
 mass = parameters.mass;
 crossSectionalArea = parameters.area;
 coefficentOfDrag = parameters.drag;
 
+%Physical constants
 density = 1.225; %of the air in kg/m^3
-c = crossSectionalArea * coefficentOfDrag * density / 2;
-g = 9.8;
+g = 9.8; %Acceleration due to gravity
+c = crossSectionalArea * coefficentOfDrag * density / 2; %Calculation of
+%the air resistance coefficiant
 
+%Create a new matrix of the other sides of the derivative equations
+%See work for more details and explanation on how the below equations were
+%derived
 f = zeros(4,1);
+
+
 %Derivative of vx
 f(1,1)= -c * sqrt(Y(1).^2 + Y(2).^2) * Y(1) / mass;
 %Derivative of vy
