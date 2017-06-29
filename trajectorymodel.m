@@ -61,10 +61,8 @@ timeTillLaunch = timeIntersectionThreat - timeIntersectionInterceptor - timeElap
 plot(YInterceptor(1:iInterceptor,3), YInterceptor(1:iInterceptor,4), 'b');
 hold on;
 plot(YInterceptor(iInterceptor: length(YInterceptor),3), YInterceptor(iInterceptor: length(YInterceptor),4), ':b');
-
->>>>>>> e5d8f5675265ba0d7fc5ec8c192819b08bd52160
 plot(YThreat(1:iThreat,3), YThreat(1:iThreat,4), 'r');
-plot(YInterceptor(iIntercept: length(YInterceptor),3), YInterceptor(iIntercept: length(YInterceptor),4), ':b');
+plot(YInterceptor(iInterceptor: length(YInterceptor),3), YInterceptor(iInterceptor: length(YInterceptor),4), ':b');
 plot(YThreat(iThreat:length(YThreat),3), YThreat(iThreat:length(YThreat),4), ':r');
 
 plot(intersectionX, intersectionY, '-*k');
