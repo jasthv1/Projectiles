@@ -40,20 +40,29 @@ xAfter = YThreat(iThreat, 3);
 xDif = xAfter - xBefore;
 xDifToIntersection = intersectionX - xBefore;
 ratio = xDifToIntersection / xDif;
-timeIntersection = tThreat(iThreat) + ratio * timeStep;
+timeIntersectionThreat = tThreat(iThreat) + ratio * timeStep;
 
-iIntercept = 1;
-while YInterceptor(iIntercept,3) > intersectionX
-    iIntercept = iIntercept + 1;
+iInterceptor = 1;
+while YInterceptor(iInterceptor,3) > intersectionX
+    iInterceptor = iInterceptor + 1;
 end
+xBefore = YInterceptor(iInterceptor - 1, 3);
+xAfter = YInterceptor(iInterceptor, 3);
+xDif = xAfter - xBefore;
+xDifToIntersection = intersectionX - xBefore;
+ratio = xDifToIntersection / xDif;
+timeIntersectionInterceptor = tInterceptor(iInterceptor) + ratio * timeStep;
 
 %Stop timing and read time
 timeElapsed = toc;
-timeTillLaunch = timeIntersection - timeElapsed
+timeTillLaunch = timeIntersectionThreat - timeIntersectionInterceptor - timeElapsed
 
 %Plot everything
-plot(YInterceptor(1:iIntercept,3), YInterceptor(1:iIntercept,4), 'b');
+plot(YInterceptor(1:iInterceptor,3), YInterceptor(1:iInterceptor,4), 'b');
 hold on;
+plot(YInterceptor(iInterceptor: length(YInterceptor),3), YInterceptor(iInterceptor: length(YInterceptor),4), ':b');
+
+>>>>>>> e5d8f5675265ba0d7fc5ec8c192819b08bd52160
 plot(YThreat(1:iThreat,3), YThreat(1:iThreat,4), 'r');
 plot(YInterceptor(iIntercept: length(YInterceptor),3), YInterceptor(iIntercept: length(YInterceptor),4), ':b');
 plot(YThreat(iThreat:length(YThreat),3), YThreat(iThreat:length(YThreat),4), ':r');
