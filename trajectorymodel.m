@@ -1,24 +1,34 @@
+
 %%
 clear;
 clc;
 
-timeStep = 0.01;
-%Time interval
-time = 0:timeStep:(5 - timeStep);
 %Begin timing
 tic;
+
+%Defining variables
+voThreat = 20;
+angleThreat =  pi / 4 ;
+voInterceptor = 45;
+angleInterceptor = pi / 4;
+seperation = 25;
+
+%Time interval
+timeStep = 0.01;
+time = 0:timeStep:(10 - timeStep);
 
 %Define parameters for threat structure
 threatParams.mass = 1.134;
 threatParams.area = 0.05067;
 threatParams.drag = 0.47;
-threatIC = [35 / sqrt(2),35 / sqrt(2),0,0];
+threatIC = [voThreat * cos(angleThreat),voThreat * sin(angleThreat),0,0];
 
 %Define parameters for interceptor structure
 interceptorParams.mass = 0.0427;
 interceptorParams.area = 0.0025652;
 interceptorParams.drag = 0.47;
-interceptorIC = [-45 / sqrt(2),45 / sqrt(2),50,0];
+interceptorIC = [-voInterceptor * cos(angleInterceptor),voInterceptor * sin(angleInterceptor),seperation,0];
+
 %Differential equations solver calculates the X velocities, Z velocities,
 %X position, and Z position. Stored in an array 'Y'
 [tInterceptor,YInterceptor] = ode45(@(t,Y) trajectory(t,Y,interceptorParams), time, interceptorIC);
@@ -48,7 +58,6 @@ timeIntersectionInterceptor = tInterceptor(iInterceptor) + ratio * timeStep;
 
 %Stop timing and read time
 timeElapsed = toc;
-toc
 %Find the time until the interceptor needs to be launched
 timeTillLaunch = timeIntersectionThreat - timeIntersectionInterceptor - timeElapsed
 
