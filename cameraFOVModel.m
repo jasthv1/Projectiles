@@ -21,7 +21,7 @@ cameraAngleToSide2 = 0;
 disFromT = 20;
 disBetween= 15;
 disOffGround=5;
-cam1Pos=0;
+cam1Pos=20;
 
 %dimensions of camera
 height=2;
@@ -124,19 +124,19 @@ lowerRightZ2 = zeros(disFromT, 1);
 count=disFromT;
 pos2=disFromT;
 
-
+%NOTE: these may need to take camera position into account
 while count>0
     
     lowerLeftX(pos2) = boreVecX(pos2)- count * tan (thetaX/2) - width/2 ;
     lowerLeftZ(pos2) = boreVecZ(pos2) - count * tan(thetaY/2) - height/2;
     
-    upperLeftX(pos2) = boreVecX(pos2)- count * tan (thetaX/2) - width/2 ;
+    upperLeftX(pos2) = boreVecX(pos2)- count * tan (thetaX/2) - width/2;
     upperLeftZ(pos2) = boreVecZ(pos2) + count * tan(thetaY/2) + height/2;
     
     upperRightX(pos2) = boreVecX(pos2)+ count * tan (thetaX/2) +width/2 ;
     upperRightZ(pos2) = boreVecZ(pos2) + count * tan(thetaY/2) + height/2;
     
-    lowerRightX(pos2) = boreVecX(pos2)+ count * tan (thetaX/2) + width/2 ;
+    lowerRightX(pos2) = boreVecX(pos2)+ count * tan (thetaX/2) + width/2;
     lowerRightZ(pos2) = boreVecZ(pos2) - count * tan(thetaY/2) - height/2;
     
     %camera 2
@@ -164,7 +164,7 @@ plot3(lowerRightX,boreVecY , lowerRightZ,'--');
 plot3(upperRightX,boreVecY , upperRightZ,'--');
 
 %create funnels
-plane1X=[0,0, upperLeftX(disFromT),lowerLeftX(disFromT),0];
+plane1X=[cam1Pos,cam1Pos, upperLeftX(disFromT),lowerLeftX(disFromT),cam1Pos];
 plane1Y=[disFromT,disFromT, 0,0,disFromT];
 plane1Z=[disOffGround, disOffGround+height, upperLeftZ(disFromT),lowerLeftZ(disFromT),disOffGround];
 
@@ -173,45 +173,45 @@ colors=[.5,.5,.5,.5,.5];
 fill3(plane1X,plane1Y,plane1Z,colors);
 alpha(.5);
 
-plane2X=[0,width,upperRightX(disFromT),upperLeftX(disFromT),0];
+plane2X=[cam1Pos,width+cam1Pos,upperRightX(disFromT),upperLeftX(disFromT),cam1Pos];
 plane2Z=[disOffGround+height,disOffGround+height,upperRightZ(disFromT),upperLeftZ(disFromT) ,disOffGround+height];
 
 fill3(plane2X,plane1Y,plane2Z,colors);
 alpha(.5);
 
-plane3X=[width,width,upperRightX(disFromT) ,lowerRightX(disFromT) ,width];
+plane3X=[width+cam1Pos,width+cam1Pos,upperRightX(disFromT) ,lowerRightX(disFromT) ,width+cam1Pos];
 plane3Z=[disOffGround,disOffGround+height,upperRightZ(disFromT),lowerRightZ(disFromT),disOffGround];
 
 fill3(plane3X,plane1Y,plane3Z, colors);
 alpha(.5);
 
-plane4X=[0,width,lowerRightX(disFromT),lowerLeftX(disFromT),0];
+plane4X=[cam1Pos,width+cam1Pos,lowerRightX(disFromT),lowerLeftX(disFromT),cam1Pos];
 plane4Z=[disOffGround,disOffGround,lowerRightZ(disFromT),lowerLeftZ(disFromT),disOffGround];
 
 fill3(plane4X,plane1Y,plane4Z,colors);
 alpha(.5);
 
 %camera2 funnels
-plane1X=[disBetween,disBetween, upperLeftX(disFromT)+disBetween,lowerLeftX(disFromT)+disBetween,disBetween];
+plane1X=[disBetween+cam1Pos,disBetween+cam1Pos, upperLeftX(disFromT)+disBetween,lowerLeftX(disFromT)+disBetween,disBetween+cam1Pos];
 plane1Y=[disFromT,disFromT, 0,0,disFromT];
 plane1Z=[disOffGround, disOffGround+height, upperLeftZ(disFromT),lowerLeftZ(disFromT),disOffGround];
 
 fill3(plane1X,plane1Y,plane1Z,colors);
 alpha(.5);
 
-plane2X=[disBetween,width+disBetween,upperRightX(disFromT)+disBetween,upperLeftX(disFromT)+disBetween,disBetween];
+plane2X=[disBetween+cam1Pos,width+disBetween+cam1Pos,upperRightX(disFromT)+disBetween,upperLeftX(disFromT)+disBetween,disBetween+cam1Pos];
 plane2Z=[disOffGround+height,disOffGround+height,upperRightZ(disFromT),upperLeftZ(disFromT) ,disOffGround+height];
 
 fill3(plane2X,plane1Y,plane2Z,colors);
 alpha(.5);
 
-plane3X=[width+disBetween,width+disBetween,upperRightX(disFromT)+disBetween ,lowerRightX(disFromT)+disBetween ,width+disBetween];
+plane3X=[width+disBetween+cam1Pos,width+disBetween+cam1Pos,upperRightX(disFromT)+disBetween ,lowerRightX(disFromT)+disBetween ,width+disBetween+cam1Pos];
 plane3Z=[disOffGround,disOffGround+height,upperRightZ(disFromT),lowerRightZ(disFromT),disOffGround];
 
 fill3(plane3X,plane1Y,plane3Z, colors);
 alpha(.5);
 
-plane4X=[disBetween,width+disBetween,lowerRightX(disFromT)+disBetween,lowerLeftX(disFromT)+disBetween,disBetween];
+plane4X=[disBetween+cam1Pos,width+disBetween+cam1Pos,lowerRightX(disFromT)+disBetween,lowerLeftX(disFromT)+disBetween,disBetween+cam1Pos];
 plane4Z=[disOffGround,disOffGround,lowerRightZ(disFromT),lowerLeftZ(disFromT),disOffGround];
 
 fill3(plane4X,plane1Y,plane4Z,colors);
@@ -226,8 +226,8 @@ plot3(upperRightX2,boreVecY , upperRightZ2,'--');
 xlim([-30, 70]);
 ylim([-10, disFromT+10]);
 zlim([.4, 30]); 
-xlabel('Distance between target in interceptor in meters');
-ylabel('Distance from target in meters');
+xlabel('X axis');
+ylabel('Y axis');
 zlabel('Height in meters');
 title('Camera FOV Model');
 
