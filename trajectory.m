@@ -3,7 +3,7 @@
 %t is the time paramater, unused because the force is time invariant
 %Y represents the variables to differentiate with respect to time
 %The parameters define the parameters of the object (mass, drag, area)
-function f = trajectory_new(t, Y, parameters)
+function f = trajectory(t, Y, parameters)
 
 %parameters is a structure that contains the fields below
 mass = parameters.mass;

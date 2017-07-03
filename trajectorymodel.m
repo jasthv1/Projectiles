@@ -1,7 +1,4 @@
-
-%%
-clear;
-clc;
+function timeTillLaunch = trajectorymodel(seperation)
 
 %Begin timing
 tic;
@@ -11,7 +8,7 @@ voThreat = 20;
 angleThreat =  pi / 4 ;
 voInterceptor = 45;
 angleInterceptor = pi / 4;
-seperation = 25;
+%seperation = 25;
 
 %Time interval
 timeStep = 0.01;
@@ -62,6 +59,7 @@ timeElapsed = toc;
 timeTillLaunch = timeIntersectionThreat - timeIntersectionInterceptor - timeElapsed
 
 %Plot everything
+%Comment out eventually
 plot(YInterceptor(1:iInterceptor,3), YInterceptor(1:iInterceptor,4), 'b');
 hold on;
 plot(YThreat(1:iThreat,3), YThreat(1:iThreat,4), 'r');
