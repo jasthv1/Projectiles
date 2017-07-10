@@ -9,7 +9,7 @@ startAZ = -9.8;
 thetaLast = [startX; startVX; startAX; startZ; startVZ; startAZ];
 
 %Initial variance matrix
-pLast = zeros(6, 6);%TODO change this
+pLast = zeros(6, 6);
 pLast = 10^2*diag(ones(6,1));
 
 %Process error matrix
