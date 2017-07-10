@@ -1,4 +1,4 @@
-function timeTillLaunch = trajectorymodel(seperation, makePlots)
+function timeTillLaunch = trajectorymodel(startingXThreat, startingZThreat, vXThreat, vZThreat, makePlots)
 
 %Begin timing
 tic;
@@ -8,9 +8,10 @@ timeStep = 0.01;
 time = 0:timeStep:(10 - timeStep);
 
 %Get paths
-paths = getPaths(time, seperation);
+paths = getPaths(time, startingXThreat, startingZThreat, vXThreat, vZThreat);
 YInterceptor = paths.interceptor;
 YThreat = paths.threat;
+
 
 
 %Calculate intersections
@@ -19,7 +20,7 @@ YThreat = paths.threat;
 
 %Iterator through the paths
 %Finds the index of the first x greater than the intersection point
-%Finds the time at these points
+%Finds the time at these points00
 iThreat = find(YThreat(:, 3) > intersectionX, 1);
 xBefore = YThreat(iThreat - 1, 3);
 xAfter = YThreat(iThreat, 3);
@@ -60,4 +61,3 @@ if(makePlots)
     ylabel('Y Position in Meters');
     legend('Interceptor', 'Target');
 end
-

@@ -38,7 +38,7 @@ t = 0:dt:3;
 
 
 %find the ideal paths of the target and interceptor (only target is used) 
-path = getPaths(t, 20);
+path = getPaths(t, -20, 0, 20 * cos(pi / 4), 20 * sin(pi / 4));
 threat = path.threat;
 threat(1,:) = [];
 
@@ -86,7 +86,8 @@ for i = 1:length(t)
     z_filtered(i) = thetaLast(4);
     
     xVel_filtered(i) = thetaLast(2);
-    
+    predictedTime = trajectorymodel(thetaLast(1), thetaLast(4), thetaLast(2), thetaLast(5), false)
+    if(predictedTime < 0) break; end;
 end
 
 %Find the true trajectory of the target

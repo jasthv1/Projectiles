@@ -1,4 +1,4 @@
-function paths = getPaths(time, seperation)
+function paths = getPaths(time, seperation, height, vXThreat, vZThreat)
 
 %%% ============================== Inputs ============================= %%%
 % time - .....
@@ -8,8 +8,8 @@ function paths = getPaths(time, seperation)
 
 
 %Defining variables
-voThreat = 20;
-angleThreat =  pi / 4 ;
+%voThreat = 20;
+%angleThreat =  pi / 4 ;
 voInterceptor = 45;
 angleInterceptor = pi / 4;
 %seperation = 25;
@@ -19,7 +19,7 @@ angleInterceptor = pi / 4;
 threatParams.mass = 1.134;
 threatParams.area = 0.05067;
 threatParams.drag = 0.47;
-threatIC = [voThreat * cos(angleThreat),voThreat * sin(angleThreat),-seperation, 0];
+threatIC = [vXThreat,vZThreat, seperation, height];
 
 %Define parameters for interceptor structure
 interceptorParams.mass = 0.0427;
@@ -35,3 +35,5 @@ interceptorIC = [-voInterceptor * cos(angleInterceptor),voInterceptor * sin(angl
 
 paths.interceptor = YInterceptor;
 paths.threat = YThreat;
+end
+
