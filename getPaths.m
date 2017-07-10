@@ -1,5 +1,12 @@
 function paths = getPaths(time, seperation)
 
+%%% ============================== Inputs ============================= %%%
+% time - .....
+% separation - ...
+%%% ============================= Outputs ============================= %%%
+% paths - ...
+
+
 %Defining variables
 voThreat = 20;
 angleThreat =  pi / 4 ;
