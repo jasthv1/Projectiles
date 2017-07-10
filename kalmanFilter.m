@@ -5,10 +5,12 @@ startAX = 0;
 startZ = 0;
 startVZ = 20 * cos(pi / 4);
 startAZ = -9.8;
-sigmaX = .5;
-sigmaZ = .5;
+sigmaX = .2;
+sigmaZ = .2;
 %Create a matrix to represent all initial values
 thetaLast = [startX; startVX; startAX; startZ; startVZ; startAZ];
+
+cutoffTime = 0.1;
 
 %Initial variance matrix
 pLast = zeros(6, 6);
@@ -86,8 +88,11 @@ for i = 1:length(t)
     z_filtered(i) = thetaLast(4);
     
     xVel_filtered(i) = thetaLast(2);
-    predictedTime = trajectorymodel(thetaLast(1), thetaLast(4), thetaLast(2), thetaLast(5), false)
-    if(predictedTime < 0) break; end;
+    predictedTime = trajectorymodel(thetaLast(1), thetaLast(4), thetaLast(2), thetaLast(5), false);
+    if(predictedTime < cutoffTime) 
+        trajectorymodel(thetaLast(1), thetaLast(4), thetaLast(2), thetaLast(5), true); 
+        break;
+    end
 end
 
 %Find the true trajectory of the target
@@ -100,8 +105,8 @@ z_truth = m_truth(2, :);
 plot(x_measured,z_measured,'bo')
 hold on
 plot(x_truth,z_truth,'-g','linewidth',1)
-plot(x_filtered,z_filtered,'-*r','linewidth',2)
-legend('Measured','Truth','Filtered')
+%plot(x_filtered,z_filtered,'-*r','linewidth',2)
+%legend('Measured','Truth','Filtered')
 
 
 % %hold off
