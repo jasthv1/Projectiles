@@ -22,7 +22,6 @@ z_filtered = zeros(size(t));
 x_measured = zeros(size(t));
 z_measured = zeros(size(t));
 for i = 1:length(t)
-    pLast
     measurement = getMeasurement(t(i), sigmaX, sigmaZ); %change this
     thetaPrediction = getFMatrix(dt) * thetaLast; 
     pPrediction = getFMatrix(dt) * pLast * getFMatrix(dt)' + Q;
