@@ -1,5 +1,5 @@
 %Initial guesses for position, velocity, and acceleration (meters based)
-startX = 0;
+startX = seperation;
 startVX = 20 * cos(pi / 4);
 startAX = 0;
 startZ = 0;
@@ -13,10 +13,10 @@ pLast = zeros(6, 6);
 pLast = 10^2*diag(ones(6,1));
 
 %Process error matrix
-Q = zeros(6, 6); %For now
+Q = .01 * ones(6, 6); %For now
 %Simulated camera error for measurements
-sigmaX = .5;
-sigmaZ = .5;
+sigmaX = .1;
+sigmaZ = .1;
 R = zeros(2, 2);
 R(1, 1) = sigmaX^2;
 R(2, 2) = sigmaZ^2;
@@ -78,7 +78,7 @@ x_truth = m_truth(1, :);
 z_truth = m_truth(2, :);
 
 %Plot everything
-figure
+% figure
 plot(x_measured,z_measured,'bo')
 hold on
 plot(x_truth,z_truth,'-g','linewidth',1)
