@@ -1,22 +1,29 @@
 %Initial guesses for position, velocity, and acceleration (meters based)
-startX = seperation;
+startX = -20;
 startVX = 20 * cos(pi / 4);
 startAX = 0;
 startZ = 0;
 startVZ = 20 * cos(pi / 4);
 startAZ = -9.8;
+sigmaX = .1;
+sigmaZ = .1;
 %Create a matrix to represent all initial values
 thetaLast = [startX; startVX; startAX; startZ; startVZ; startAZ];
 
 %Initial variance matrix
 pLast = zeros(6, 6);
-pLast = 10^2*diag(ones(6,1));
+% pLast = 10^2*diag(ones(6,1));
+pLast(1,1) = sigmaX^2;
+pLast(2,2) = 5^2;
+pLast(3,3) = 3^2;
+pLast(4,4) = sigmaZ^2;
+pLast(5,5) = 5^2;
+pLast(6,6) = 3^2;
 
 %Process error matrix
-Q = .01 * ones(6, 6); %For now
+Q = .01 * zeros(6, 6); %For now
 %Simulated camera error for measurements
-sigmaX = .1;
-sigmaZ = .1;
+
 R = zeros(2, 2);
 R(1, 1) = sigmaX^2;
 R(2, 2) = sigmaZ^2;
@@ -41,6 +48,8 @@ path = getPaths(t, 20);
 %Filter and update measurements to represent estimated values using Kalman
 %filter
 for i = 1:length(t)
+    thetaLast(5)
+    path.threat(i,2)
 
     %Get the measured values, will be changed to take camera input later
     measurement = getMeasurement(i, sigmaX, sigmaZ, path.threat); 
@@ -69,6 +78,8 @@ for i = 1:length(t)
     x_filtered(i) = thetaLast(1);
     z_measured(i) = measurement(2);
     z_filtered(i) = thetaLast(4);
+    
+    
     
 end
 
