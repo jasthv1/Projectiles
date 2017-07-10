@@ -21,7 +21,7 @@ pLast(5,5) = 5^2;
 pLast(6,6) = 3^2;
 
 %Process error matrix
-Q = .01 * zeros(6, 6); %For now
+Q = .001 * diag(ones(6, 1)); %For now
 %Simulated camera error for measurements
 
 R = zeros(2, 2);
@@ -58,7 +58,7 @@ xVel_filtered = zeros(size(t));
 for i = 1:length(t)
 
     %Get the measured values, will be changed to take camera input later
-    measurement = getMeasurement(i, sigmaX, sigmaZ, threat) 
+    measurement = getMeasurement(i, sigmaX, sigmaZ, threat); 
     
     %Kalman filter
     %Get the state transformation matrix
