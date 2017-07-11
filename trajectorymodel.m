@@ -1,7 +1,5 @@
 function timeTillLaunch = trajectorymodel(startingXThreat, startingZThreat, vXThreat, vZThreat, makePlots)
 
-%Begin timing
-tic;
 
 %Time interval
 timeStep = 0.01;
